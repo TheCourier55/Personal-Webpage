@@ -8,7 +8,8 @@ function DevLib() {
   return (
     <div>
       <p>Welcome to the development library, where a new version of this webpage is pushed on a week by week basis</p>
-      <button onClick={() => navigate('/')}>Week One</button>
+      <button onClick={() => navigate('/HomeOne')}>Week One</button>
+      <button onClick={() => navigate('/')}>Week Two</button>
     </div>
   )
 }

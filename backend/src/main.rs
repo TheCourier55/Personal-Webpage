@@ -1,18 +1,22 @@
 use axum::{
     routing::get,
-    Router,
-};
+    Json, Router,};
+use serde::Serialize;
+use tower_http::cors::CorsLayer;
+
+mod WeekTwo;
+pub mod GeometryWars
+pub mod War
 
 #[tokio::main]
 async fn main() {
-    let app = Router::new().route("/api/hello", get(hello_handler));
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
-        .await
-        .unwrap();
-    println!("Axum server running on http://127.0.0.1:3000");
+    let app = Router::new()
+        .route("/api/increment", get(inc))
+        .nest_service("/", ServeDir::new("dist")); 
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
 
-async fn hello_handler() -> &'static str {
-    "Hello from the Rust Axum backend!"
+async fn inc() -> Json<i32> {
+    return get(WeekTwo::GeometryWars::war::inc);
 }

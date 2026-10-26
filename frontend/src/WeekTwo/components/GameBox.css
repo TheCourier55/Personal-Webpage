@@ -1,0 +1,9 @@
+.game-box {
+  width: 100%;
+  max-width: 550px;
+  aspect-ratio: 1 / 1;
+  max-height: calc(100vh - 280px);
+  background-color: #000000;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
