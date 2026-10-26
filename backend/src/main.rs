@@ -1,22 +1,30 @@
-// use axum::{
-//     routing::get,
-//     Json, Router,};
-// use serde::Serialize;
-// use tower_http::cors::CorsLayer;
+use axum::{
+    body::Body,
+    http::{header, Response, StatusCode},
+    response::IntoResponse,
+    routing::get,
+    Router,
+};
+use rust_embed::RustEmbed;
+use std::net::SocketAddr;
 
-// mod WeekTwo;
-// pub mod GeometryWars;
-// pub mod War;
+// 1. Tell Rust where your frontend build folder is located relative to this file.
+// (Make sure you run `npm run build` in your frontend folder so a 'dist' folder exists!)
+#[derive(RustEmbed)]
+#[folder = "../frontend/dist"] 
+struct Asset;
 
-// #[tokio::main]
-// async fn main() {
-//     let app = Router::new()
-//         .route("/api/increment", get(inc))
-//         .nest_service("/", ServeDir::new("dist")); 
-//     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000").await.unwrap();
-//     axum::serve(listener, app).await.unwrap();
-// }
+#[tokio::main]
+async fn main() {
+    // Build our application router with routes
+    let app = Router::new();
+        // API routes can go here
+        // Catch-all route to serve the React Single Page Application (SPA)
 
-// async fn inc() -> Json<i32> {
-//     return get(WeekTwo::GeometryWars::war::inc);
-// }
+    // Bind to 0.0.0.0:8080 (or port 80/3000 depending on your setup)
+    let addr = SocketAddr::from(([0, 0, 0, 0], 8080));
+    println!("Server started successfully at http://{}", addr);
+
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
